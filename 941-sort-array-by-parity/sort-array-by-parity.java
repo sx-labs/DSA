@@ -1,21 +1,19 @@
 class Solution {
     public int[] sortArrayByParity(int[] nums) {
-        //read point and write pointer
-        int l = 0 ;
-        int r = nums.length-1;
-        while(l<r) {
-            //even h toh whi rehndo sai jgh hai
-            if(nums[l] %2 == 0 ) {
-                l++;
+        int low = 0 ;
+        int mid = 0 ;
+        int end = nums.length-1;
+        while(mid<= end) {
+            if(nums[mid] %2 == 0) {
+                swap(nums , low , mid);
+                low++;
+                mid++;
             }
-            else if(nums[r] % 2 == 0){
-                swap(nums , l , r);
-                l++;
-                r--;
-            }
-            //odd hai sai jgh h whi rehndo aage mt lao
             else {
-                r--;
+                swap(nums , mid , end);
+                end--;
+                // we can't do this since that element is not processed yet
+                //mid++;
             }
         }
         return nums;
