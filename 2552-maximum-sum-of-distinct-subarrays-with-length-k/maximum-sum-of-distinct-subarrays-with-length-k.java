@@ -2,6 +2,7 @@ class Solution {
     public long maximumSubarraySum(int[] nums, int k) {
         int left = 0;
         long maxsum = 0;
+        //https://chatgpt.com/s/t_6aae99b8d034819185f494ce5bf7b7a2
         long currsum = 0;
         //"Have I already seen this number inside my current window?" That's exactly what a HashSet is useful for.
         Set<Integer> set = new HashSet<>();
