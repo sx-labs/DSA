@@ -1,0 +1,45 @@
+class Solution {
+    public int longestSemiRepetitiveSubstring(String s) {
+
+        int left = 0;
+        int maxLength = 0;
+
+        for (int right = 0; right < s.length(); right++) {
+
+            // Check whether the last 3 characters are identical
+            if (right >= 2 &&
+                s.charAt(right) == s.charAt(right - 1) &&
+                s.charAt(right) == s.charAt(right - 2)) {
+
+                left++;
+            }
+
+            // Calculate current window length
+            maxLength = Math.max(maxLength, right - left + 1);
+        }
+
+        return maxLength;
+    }
+}
+
+/* 
+We need to find the longest continuous substring where we never have 3 same characters consecutively.
+
+Example
+s = "aaab"
+
+Look at:
+
+a a a b
+↑ ↑ ↑
+
+There are 3 consecutive as:
+
+"aaa" ❌
+
+So "aaab" is not valid.
+
+But:
+
+"ab" ✅
+"aa" ✅ */
