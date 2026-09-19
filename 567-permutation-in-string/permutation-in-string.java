@@ -34,3 +34,5 @@ class Solution {
         return false;
     }
 }
+
+/* "The current window contains exactly the same characters with exactly the same frequencies as s1, therefore this window is a permutation of s1." */
