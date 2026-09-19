@@ -19,6 +19,7 @@ class Solution {
              // Now window size is exactly k (first we maintain the valid window)
             if(right-left+1 == windowsize) {
                 if(Arrays.equals(freq , freq2)) {
+                    // cuz the algo ask return the starting algo of all the problems
                     l.add(left);
                 }
             }
