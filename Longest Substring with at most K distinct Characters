@@ -33,3 +33,85 @@ class Solution {
         return maxlen;
     }
 }
+
+/* 
+Because in this problem we need to know how many times each character occurs inside the window, not just whether it exists.
+
+That's the key difference between HashSet and HashMap.
+
+HashSet
+
+A Set answers:
+
+"Is this character present?"
+
+Example:
+
+window = "ece"
+
+HashSet = {e, c}
+
+It tells us:
+
+e → present
+c → present
+
+But it doesn't tell us:
+
+e → appears 2 times
+c → appears 1 time
+HashMap
+
+A Map can store:
+
+character → frequency
+
+So:
+
+window = "ece"
+
+HashMap = {
+    e = 2,
+    c = 1
+}
+
+Now we know both:
+
+How many distinct characters?
+→ map.size() = 2
+
+How many times does each occur?
+→ e = 2, c = 1
+But why do we actually need the frequency?
+
+Look at what happens when left moves.
+
+Suppose:
+
+window = "ece"
+         ↑
+       left
+
+Our map is:
+
+{e=2, c=1}
+
+We remove the first e.
+
+We need to change:
+
+e: 2 → 1
+
+So:
+
+map.put('e', map.get('e') - 1);
+
+The character e is still inside the window, so we cannot remove e completely.
+
+Later, if the other e leaves:
+
+e: 1 → 0
+
+NOW we remove it:
+
+map.remove('e'); */
