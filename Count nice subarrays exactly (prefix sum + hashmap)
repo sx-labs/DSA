@@ -1,0 +1,32 @@
+class Solution {
+    public int numberOfSubarrays(int[] nums, int k) {
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        // Prefix sum 0 exists once before the array starts
+        map.put(0, 1);
+
+        int sum = 0;
+        int count = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+
+            // Odd = 1, Even = 0
+            if (nums[i] % 2 != 0) {
+                sum++;
+            }
+
+            // We need a previous prefix sum of sum - k
+            int required = sum - k;
+
+            if (map.containsKey(required)) {
+                count += map.get(required);
+            }
+
+            // Store current prefix sum
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+        }
+
+        return count;
+    }
+}
