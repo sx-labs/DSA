@@ -1,0 +1,37 @@
+class Solution {
+    public int maxSubArrayLen(int[] nums, int k) {
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        // Prefix sum 0 exists before the array starts
+        map.put(0, -1);
+
+        int sum = 0;
+        int maxLength = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+
+            // Build prefix sum
+            sum += nums[i];
+
+            // We need an earlier prefix sum of sum - k
+            int required = sum - k;
+
+            // Have we seen it before?
+            if (map.containsKey(required)) {
+
+                int length = i - map.get(required);
+
+                maxLength = Math.max(maxLength, length);
+            }
+
+            // Store ONLY the first/earliest occurrence
+            if (!map.containsKey(sum)) {
+                map.put(sum, i);
+            }
+        }
+
+        return maxLength;
+    }
+}
+    
