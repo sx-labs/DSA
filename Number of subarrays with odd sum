@@ -1,0 +1,37 @@
+class Solution {
+    public int numOfSubarrays(int[] arr) {
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        // 0 = even prefix sum
+        // We have seen even prefix sum once before the array starts
+        map.put(0, 1);
+
+        int sum = 0;
+        int count = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+
+            // Add current element to prefix sum
+            sum += arr[i];
+
+            // 0 = even, 1 = odd
+            int parity = sum % 2;
+
+            // Current odd → need previous even
+            if (parity == 1) {
+                count += map.getOrDefault(0, 0);
+            }
+
+            // Current even → need previous odd
+            else {
+                count += map.getOrDefault(1, 0);
+            }
+
+            // Store current parity
+            map.put(parity, map.getOrDefault(parity, 0) + 1);
+        }
+
+        return count;
+    }
+}
