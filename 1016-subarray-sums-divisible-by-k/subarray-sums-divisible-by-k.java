@@ -8,8 +8,18 @@ class Solution {
             sum+= nums[i];
              int remainder = ((sum % k) + k) % k;
             if(map.containsKey(remainder)) {
-                count+= map.getOrDefault(remainder , 0);
+                count+= map.get(remainder);
             }
+            /*
+            If you need an index:
+            prefix/remainder → index
+            Example:
+            map.put(rem, i);
+            If you need a count:
+            prefix/remainder → frequency
+            Example:
+            map.put(rem, map.getOrDefault(rem, 0) + 1);
+            */
             map.put(remainder, map.getOrDefault(remainder, 0) + 1);
         }
         return count;
