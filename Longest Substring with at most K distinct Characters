@@ -34,6 +34,47 @@ class Solution {
     }
 }
 
+//Longest substring with k unique characters
+
+class Solution {
+    public int longestKSubstr(String s, int k) {
+
+        HashMap<Character, Integer> map = new HashMap<>();
+
+        int left = 0;
+        int maxlen = -1;
+
+        for (int right = 0; right < s.length(); right++) {
+
+            char ch = s.charAt(right);
+
+            // Add right character
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+
+            // Too many distinct characters
+            while (map.size() > k) {
+
+                char leftChar = s.charAt(left);
+
+                map.put(leftChar, map.get(leftChar) - 1);
+
+                if (map.get(leftChar) == 0) {
+                    map.remove(leftChar);
+                }
+
+                left++;
+            }
+
+            // Exactly k distinct characters
+            if (map.size() == k) {
+                maxlen = Math.max(maxlen, right - left + 1);
+            }
+        }
+
+        return maxlen;
+    }
+}
+
 /* 
 Because in this problem we need to know how many times each character occurs inside the window, not just whether it exists.
 
