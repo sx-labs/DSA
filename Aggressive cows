@@ -1,0 +1,54 @@
+import java.util.Arrays;
+
+class Solution {
+    public int aggressiveCows(int[] arr, int k) {
+
+        // 1. Sort the stall positions
+        Arrays.sort(arr);
+
+        // 2. Possible range of minimum distance
+        int left = 1;
+        int right = arr[arr.length - 1] - arr[0];
+
+        int ans = 0;
+
+        // 3. Binary search on the answer (distance)
+        while (left <= right) {
+
+            int mid = left + (right - left) / 2;
+
+            // 4. Place the first cow
+            int lastPosOfCow = arr[0];
+            int cows = 1;
+
+            // 5. Try placing remaining cows
+            for (int i = 1; i < arr.length; i++) {
+
+                // Is this stall far enough from the last cow?
+                if (arr[i] - lastPosOfCow >= mid) {
+
+                    // Yes → place another cow
+                    cows++;
+                    lastPosOfCow = arr[i];
+                }
+            }
+
+            // 6. Did we manage to place all k cows?
+            if (cows >= k) {
+
+                // mid is possible.
+                // Try to find an even larger distance.
+                ans = mid;
+                left = mid + 1;
+
+            } else {
+
+                // mid is impossible.
+                // Need a smaller distance.
+                right = mid - 1;
+            }
+        }
+
+        return ans;
+    }
+}
