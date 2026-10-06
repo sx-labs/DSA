@@ -1,0 +1,42 @@
+class Solution {
+    public int findPages(int[] arr, int k) {
+        // code here
+        int left = Integer.MIN_VALUE ; 
+        int right = 0 ;
+        int ans = -1;
+        for(int i = 0 ; i<arr.length ; i++) {
+            left = Math.max(left , arr[i]);
+            right += arr[i];
+        }
+        while(left<= right) {
+            int mid = left + (right - left)/2; //assum mid is maximum no of page we can allocate
+            int currentpages = 0;
+            int studentassigned = 1; //Before looking at any book:there is already one student available for that first book.
+            for(int i = 0  ;i<arr.length; i++) {
+            if (currentPages + arr[i] <= mid) {
+                    currentpages += arr[i]; /*urrentpages += i;
+
+                                              But i is the index.
+
+                                              We need to add the number of pages in the book:
+
+                                              currentpages += arr[i]; */
+            } else {
+                studentassigned++;
+                currentpages = arr[i];
+            }
+            }
+            if(studentassigne<= k) { /* But think about the meaning:
+
+                                         studentassigned = students we NEED
+                                         k = students AVAILABLE*/
+                ans = mid;
+                right = mid-1;
+            }
+            else {
+                left = mid+1;
+            }
+        }
+        return ans;
+    }
+}
