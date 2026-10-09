@@ -1,0 +1,27 @@
+class Solution {
+    public int NthRoot(int N, int M) {
+        int left = 1 ;
+        int right = M;
+        while(left<= right) {
+            int mid = left + (right - left)/2;
+            int result = power(mid , N , M);
+            if( result == M) {
+                return mid;
+            }
+            else if(result < M) {
+                left = mid+1;
+            }
+            else{
+                right = mid-1;
+            }
+        }
+        return -1;
+    }
+    private int power(int mid , int N , int M)  {
+        long result = 1;
+        for(int i = 0 ; i<n ;i++) {
+            result *= mid;
+        } 
+    }
+    return result;
+}
