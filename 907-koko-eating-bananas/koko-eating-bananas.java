@@ -15,12 +15,8 @@ class Solution {
             // Current speed we are testing ( mid represents speed here)
             int mid = left + (right - left)/2;
 
-            // Calculate total hours needed at speed 'mid'
-            long hours = 0; //For the LeetCode constraints, the total number of hours can become larger than an int can safely hold in some cases. Use long for hours.
-            for(int pile : piles) {
-                hours += (pile + mid - 1) / mid;
-            }
-
+            long hours = calculateTotalHours(piles, mid);
+            
             // Check whether Koko can finish within h hours
             if(hours <= h) {
                 ans = mid;
@@ -32,4 +28,37 @@ class Solution {
         }
         return ans;
     }
+
+
+    // Separate function to calculate total hours
+    private long calculateTotalHours(int[] piles, int mid) {
+        long hours = 0; ////For the LeetCode constraints, the total number of hours can become larger than an int can safely hold in some cases. Use long for hours.
+
+        for (int pile : piles) {
+            hours += Math.ceil((double) pile / mid);
+        }
+
+        return hours;
+    }
+
 }
+/* 
+So we convert one of the two numbers to double:
+
+(double) pile / mid
+
+Now Java says:
+
+double / int
+
+and automatically converts mid to double too:
+
+7.0 / 3.0 = 2.3333...
+
+Then:
+
+Math.ceil(2.3333...)
+
+gives:
+
+3.0 */
