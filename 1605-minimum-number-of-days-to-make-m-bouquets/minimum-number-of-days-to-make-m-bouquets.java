@@ -47,3 +47,11 @@ class Solution {
         return ans;
     }
 }
+
+Note - /* 
+    The loop checks indexes in order: 0 → 1 → 2 → 3 → 4.
+
+Therefore, when consecutive increases, it means the current flower and the immediately preceding flowers in the current uninterrupted run have all bloomed.
+
+If an unbloomed flower appears, the else resets the count, so flowers separated by it cannot accidentally be counted together
+    */
