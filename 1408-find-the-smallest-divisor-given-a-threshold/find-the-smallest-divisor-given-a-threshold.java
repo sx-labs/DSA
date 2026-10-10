@@ -5,7 +5,7 @@ class Solution {
         for(int i : nums) {
             right = Math.max(right ,i);
         }
-        int ans = 1;
+        int ans = -1;
         while(left<= right) {
             int mid = left + (right - left)/2; //divisor we are checking
             long sum = 0 ;
