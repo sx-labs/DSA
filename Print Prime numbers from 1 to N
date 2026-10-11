@@ -1,0 +1,28 @@
+   public List<Integer> primeNumbers(int N) {
+        List<Integer> l = new ArrayList<>();
+        
+        for(int i = 2 ; i<=N ;i++) {
+            if(isPrime(i)) {
+                l.add(i);
+            }
+        }
+        return l;
+    }
+
+    public boolean isPrime(int y) {
+       if(y==0 || y==1)  {
+        return false;
+       }
+       int x = 2;
+       while(x*x<=y) {
+/*
+If we use x * x <= N, we check x = 7 and discover that 49 is divisible by 7. So we correctly identify 49 as not prime.
+If we use x * x < N, we stop before checking 7 and incorrectly identify 49 as prime.
+*/
+        if(y%x == 0) {
+            return false;
+        }
+        x++;
+       }
+       return true;
+    }
