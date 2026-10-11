@@ -1,0 +1,39 @@
+class Solution {
+    public String characterFrequency(String s) {
+
+        HashMap<Character, Integer> map = new HashMap<>();
+
+        // Count the frequency of each character
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+
+            if (map.containsKey(ch)) {
+                map.put(ch, map.get(ch) + 1);
+            } else {
+                map.put(ch, 1);
+            }
+        }
+
+        // Store distinct characters in a list
+        List<Character> l = new ArrayList<>(map.keySet());
+
+        // Sort characters in ascending order
+        Collections.sort(l);
+
+        // Build the final result
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < l.size(); i++) {
+            char ch = l.get(i);
+
+            result.append(ch);
+            result.append(map.get(ch));
+
+             if (i != l.size() - 1) { //You're appending a space twice after every pair except the last one, where you're still appending one space.
+                result.append(" ");
+            }
+        }
+
+        return result.toString();
+    }
+}
