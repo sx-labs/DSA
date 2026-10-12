@@ -1,0 +1,19 @@
+class Solution {
+    public int secondLargestElement(int[] nums) {
+        
+        int largest =Integer.MIN_VALUE;
+        int seclargest = Integer.MIN_VALUE;
+        for(int i = 0 ; i<nums.length ; i++) {
+            if(nums[i]>largest) {
+                seclargest = largest;
+                largest = nums[i];
+            }
+            if (seclargest < nums[i] && nums[i] < largest) {
+             seclargest = nums[i];
+}
+            
+           
+        }
+        return seclargest == Integer.MIN_VALUE ? -1 : seclargest;
+    }
+}
