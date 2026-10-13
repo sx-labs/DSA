@@ -37,7 +37,7 @@ class Solution {
             i++;
         }
         while(j< nums2.length) {
-            if(j==0 || nums2[j] != nums2[j-1]) {
+            if(j==0 || nums2[j] != nums2[j-1]) { // see in this if j==0 is true then it will not go to nums2[j] != nums2[j-1] this and if it is not true then it will go to second and will add l.add(nums2[j])
                 l.add(nums2[j]);
             }
             j++;
