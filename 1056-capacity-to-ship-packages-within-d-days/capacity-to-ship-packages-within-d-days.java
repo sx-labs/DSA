@@ -31,3 +31,35 @@ class Solution {
         return ans;
     }
 }
+
+class Solution {
+    public int shipWithinDays(int[] weights, int days) {
+        int capacity = 0;
+        int maxWeight = 0;
+
+        for (int i = 0; i < weights.length; i++) {
+            capacity += weights[i];
+            maxWeight = Math.max(maxWeight, weights[i]);
+        }
+
+        for (int cap = maxWeight; cap <= capacity; cap++) {
+            int day = 1;
+            int load = 0;
+
+            for (int i = 0; i < weights.length; i++) {
+                if (load + weights[i] > cap) {
+                    day++;
+                    load = weights[i]; //means load it on the next day
+                } else {
+                    load += weights[i]; //if capacity is not exceeding keep loading it on the same day
+                }
+            }
+
+            if (day <= days) {
+                return cap;
+            }
+        }
+
+        return capacity;
+    }
+}
