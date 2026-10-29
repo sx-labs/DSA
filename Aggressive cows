@@ -31,6 +31,10 @@ class Solution {
                     cows++;
                     lastPosOfCow = arr[i];
                 }
+
+                if (cows >= k) {
+                break;
+                }
             }
 
             // 6. Did we manage to place all k cows?
