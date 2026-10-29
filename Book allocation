@@ -1,0 +1,33 @@
+class Solution {
+    public int findPages(int[] nums, int m) {
+        int minpg = 0;
+        int maxpg = 0;
+        int ans = -1;
+        for(int i = 0 ; i< nums.length ; i++) {
+            maxpg += nums[i];
+            minpg = Math.max(minpg , nums[i]);
+        }
+        while(minpg <= maxpg) {
+            int mid = minpg + (maxpg - minpg)/2;
+            int student = 1;
+            int totalpage = 0;
+            for(int i = 0 ; i<nums.length ; i++) {
+                if(totalpage + nums[i] > mid) {
+                    student++;
+                    totalpage = nums[i];
+                }
+                else {
+                    totalpage += nums[i];
+                }
+            }
+            if(student <= m) {
+                ans = mid;
+                right = mid-1;
+            }
+            else {
+                left = mid+1;
+            }
+        }
+        return ans;
+    }
+}
