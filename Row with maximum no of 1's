@@ -1,0 +1,32 @@
+class Solution {
+    public int rowWithMax1s(int[][] mat) {
+        int n = mat.length;
+        int m = mat[0].length;
+       
+       int maxcount = 0;
+       int index = -1;
+       for(int i = 0 ; i<mat.length ; i++) {
+         int low = 0 ;
+         int high = m-1;
+         int ans = m;
+
+         while(low<= high) {
+            int mid = low + (high - low)/2;
+            if(mat[i][mid]>= 1) {
+                ans = mid;
+                high = mid-1;
+            }
+            else {
+                low = mid + 1;
+            }
+         }
+         
+         int count = m - ans;
+         if(count>maxcount) {
+            maxcount = count;
+            index = i;
+         }
+         }
+         return index;
+    }
+}
