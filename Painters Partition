@@ -1,0 +1,35 @@
+class Solution {
+    public int paint(int A, int B, int[] C) {
+        long min = 0;
+        long max = 0;
+        long ans = 0;
+        for(int i = 0 ; i<C.length ; i++) {
+            min = Math.max(min ,C[i]);
+            max += C[i];
+        }
+        min = min * B;
+        max = max * B;
+        while(min<= max) {
+            long mid = min + (max - min)/2;
+            int painters = 1;
+            long length = 0;
+            for(int i = 0 ; i<C.length ; i++) {
+                if((length + C[i]) * B > mid) {
+                    painters++;
+                    length = C[i];
+                }
+                else {
+                    length += C[i];
+                }
+            }
+            if(painters <= A) {
+                ans = mid;
+                max = mid - 1;
+            }
+            else {
+                min = mid + 1;
+            }
+        }
+        return (int)(ans%10000003);
+    }
+}
