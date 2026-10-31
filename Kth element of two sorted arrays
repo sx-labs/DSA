@@ -72,3 +72,173 @@ class Solution {
     }
 }
 
+/* Using Binary search
+class Solution {
+public int kthElement(int[] a, int[] b, int k) {
+
+```
+    // STEP 1: Make sure a is the smaller array.
+    // We perform binary search only on the smaller array
+    // to reduce the search space and time complexity.
+    //
+    // We still partition BOTH arrays.
+    // But we binary search only on a because once we decide
+    // how many elements to take from a, the number from b
+    // is automatically calculated.
+
+    if (a.length > b.length) {
+        int[] temp = a;
+        a = b;
+        b = temp;
+    }
+
+    int n1 = a.length; // Size of smaller array
+    int n2 = b.length; // Size of larger array
+
+    // STEP 2: We need exactly k elements in the left half.
+    //
+    // partitionX = elements taken from a.
+    // partitionY = elements taken from b.
+    //
+    // partitionX + partitionY = k
+    //
+    // We don't need to take equally from both arrays.
+    // For example, 3 from a + 3 from b is possible,
+    // but the correct distribution depends on the sorted order.
+    //
+    // Once partitionX is decided, partitionY is calculated:
+    // partitionY = k - partitionX.
+
+    // STEP 3: Calculate the binary search range.
+
+    // LOW = minimum number of elements we MUST take from a.
+    //
+    // Why?
+    // Suppose k = 6 and b has only 3 elements.
+    // We cannot take all 6 elements from b.
+    // Therefore, a must contribute at least 6 - 3 = 3 elements.
+    //
+    // But we can never take a negative number of elements.
+    // So we choose the maximum of 0 and (k - n2).
+
+    int low = Math.max(0, k - n2);
+
+    // HIGH = maximum number of elements we CAN take from a.
+    //
+    // Two restrictions:
+    // 1. We cannot take more than k elements because
+    //    the left half needs exactly k elements.
+    // 2. We cannot take more than n1 elements because
+    //    a contains only n1 elements.
+    //
+    // Therefore, choose the minimum of k and n1.
+
+    int high = Math.min(k, n1);
+
+    while (low <= high) {
+
+        // Number of elements taken from smaller array a.
+        // Binary search finds the correct partitionX.
+
+        int partitionX = low + (high - low) / 2;
+
+        // Number of elements taken from larger array b.
+        //
+        // We need exactly k elements in the left half.
+        // So if we know partitionX, partitionY is automatic.
+        //
+        // We use k, NOT totalLength, because we need
+        // exactly k elements in the left partition.
+
+        int partitionY = k - partitionX;
+
+        // STEP 4: Find the four boundary elements.
+        //
+        // l1 = last element taken from a (left side).
+        // r1 = first element remaining in a (right side).
+        //
+        // l2 = last element taken from b (left side).
+        // r2 = first element remaining in b (right side).
+
+        // If partitionX == 0, no element is taken from a's left side.
+        // So we use Integer.MIN_VALUE to avoid accessing index -1.
+        int l1 = (partitionX == 0)
+                ? Integer.MIN_VALUE
+                : a[partitionX - 1];
+
+        // If partitionX == n1, all elements of a are on the left.
+        // So no element remains on the right.
+        // We use Integer.MAX_VALUE to handle this boundary.
+
+        int r1 = (partitionX == n1)
+                ? Integer.MAX_VALUE
+                : a[partitionX];
+
+        int l2 = (partitionY == 0)
+                ? Integer.MIN_VALUE
+                : b[partitionY - 1];
+
+        int r2 = (partitionY == n2)
+                ? Integer.MAX_VALUE
+                : b[partitionY];
+
+        // STEP 5: Check whether our partition is valid.
+        //
+        // Every element on the LEFT must be <= every element
+        // on the RIGHT.
+        //
+        // Since both arrays are individually sorted,
+        // we only need to compare the boundary elements.
+        //
+        // l1 <= r2:
+        // Checks a's left boundary against b's right boundary.
+        //
+        // l2 <= r1:
+        // Checks b's left boundary against a's right boundary.
+        //
+        // BOTH conditions are necessary because an element
+        // from either array could be incorrectly placed.
+
+        if (l1 <= r2 && l2 <= r1) {
+
+            // We found the correct partition!
+            //
+            // The Kth smallest element is the largest element
+            // in the left half.
+            //
+            // We use Math.max because the left half contains
+            // elements from BOTH arrays.
+
+            return Math.max(l1, l2);
+        }
+
+        // STEP 6: If partition is incorrect, adjust binary search.
+
+        // Case 1: Too many elements taken from a.
+        //
+        // l1 > r2 means an element on a's left side
+        // is greater than an element on b's right side.
+        //
+        // We need fewer elements from a.
+        // Therefore, move the binary search towards the LEFT.
+
+        else if (l1 > r2) {
+            high = partitionX - 1;
+        }
+
+        // Case 2: Too few elements taken from a.
+        //
+        // We need more elements from a and fewer from b.
+        // Therefore, move the binary search towards the RIGHT.
+
+        else {
+            low = partitionX + 1;
+        }
+    }
+
+    return -1;
+}
+```
+
+}
+
