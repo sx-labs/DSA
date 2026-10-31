@@ -1,0 +1,81 @@
+class Solution {
+    public int findMedian(int[][] matrix) {
+
+        int row = matrix.length;
+        int col = matrix[0].length;
+
+        // It is the number of elements that should be before the median position.
+        // We are considering odd total elements because n * m is given as odd.
+        int required = (row * col) / 2;
+
+        int low = Integer.MAX_VALUE;
+        int high = Integer.MIN_VALUE;
+
+        for (int i = 0; i < row; i++) {
+
+            // We are comparing only the first and last values
+            // since every row of the matrix is already sorted.
+            // First element of each row can give us the minimum.
+            // Last element of each row can give us the maximum.
+            low = Math.min(low, matrix[i][0]);
+            high = Math.max(high, matrix[i][col - 1]);
+        }
+
+        // We will calculate the candidate value to check between high and low.
+        while (low <= high) {
+
+            // Outer binary search: mid is a candidate VALUE, not an index.
+            int mid = low + (high - low) / 2;
+
+            // Reset count for every new candidate.
+            int count = 0;
+
+            // Now we will check in each row how many elements are <= mid.
+            for (int i = 0; i < row; i++) {
+
+                int left = 0;
+                int right = col - 1;
+
+                // Inner binary search: finding the first element greater than mid.
+                while (left <= right) {
+
+                    // m represents the column INDEX in the current row.
+                    int m = left + (right - left) / 2;
+
+                    if (matrix[i][m] <= mid) {
+
+                        // Current element is <= mid, so it qualifies.
+                        // Move right to find the first element greater than mid.
+                        left = m + 1;
+
+                    } else {
+
+                        // Current element is greater than mid.
+                        // Search in the left half.
+                        right = m - 1;
+                    }
+                }
+
+                // When the inner loop ends, left represents
+                // the number of elements <= mid in this row.
+                count += left;
+            }
+
+            // If count is not greater than required,
+            // the candidate is too small, so search on the right side.
+            if (count <= required) {
+                low = mid + 1;
+            }
+
+            // Otherwise, the candidate is large enough.
+            // But we search the left side to find a smaller valid candidate.
+            else {
+                high = mid - 1;
+            }
+        }
+
+        // The loop stops when low > high.
+        // Low now holds the smallest value satisfying the median condition.
+        return low;
+    }
+}
