@@ -1,0 +1,18 @@
+class Solution {
+    public int floorSqrt(int n) {
+      long left = 1 ; 
+      long right = n ;
+      long ans = -1;
+      while(left <= right) {
+        long mid = left + (right - left)/2;
+        if(mid * mid <= n) {
+            ans = mid;
+            left = mid+1; //since we are storing mid in left so this will be lossy conversion so we have to make left and right also long
+        }
+        else {
+            right = mid-1;
+        }
+      }
+      return (int)ans;
+    }
+}
