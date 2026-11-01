@@ -1,5 +1,42 @@
 class Solution {
     public int minEatingSpeed(int[] piles, int h) {
+        int min = 1;
+        int max = 0;
+        int ans = -1;
+        for(int i = 0 ; i<piles.length ; i++) {
+            max = Math.max(max , piles[i]);
+        }
+            while(min<= max) {
+            int mid = min + (max - min)/2; //if i choose this speed
+            long time = 0 ;
+            for(int i = 0 ; i<piles.length ; i++) {
+                time += Math.ceil((double)piles[i]/mid); //we use double so that division will give value in decimal and then we can ceil it as int pile = 7;
+//int mid = 3; so pile/mid = 2 but it is in real 2.333 so we will round of and it will take 3 banana
+                }
+                if(time<= h) { 
+                    ans = mid;
+                    max = mid-1;
+                }
+                else {
+                    min = mid+1;
+                }
+
+            }
+            return ans;
+    }
+    /*
+    The maximum hours occur when: Every pile contains \(10^9\) bananas.
+Speed = 1.
+Therefore:$$ time = 10^4 * 10^9 = 10^{13} 
+But Java's int maximum is:2^31 = −1≈2.147×10^9
+
+And H is at most 10^9 so mid , min ,max can be in int
+    */
+
+
+
+class Solution {
+    public int minEatingSpeed(int[] piles, int h) {
         // range of speed 
         int left = 1 ;
         int right = 0; 
