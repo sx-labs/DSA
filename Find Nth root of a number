@@ -1,5 +1,29 @@
 class Solution {
     public int NthRoot(int N, int M) {
+        long left = 0 ;
+        long right = M;
+        long ans = -1;
+        while(left<=right) {
+            long mid = left + (right - left)/2;
+            long mul = (long)Math.pow(mid ,N);
+            if(mul == M) { //But the question asks for an exact Nth root.Consider: N = 3, M = 27 → 3³ = 27 → answer 3. N = 3, M = 20 → no integer has a cube equal to 20 → answer -1.
+                ans = mid; //if(mul <= M) so this is not applicable here
+                return ans;
+                }
+            else if(mul<M) {
+                left = mid+1;
+            }
+            else {
+                right = mid-1;
+            }
+        }
+        return ans;
+    }
+}
+
+
+class Solution {
+    public int NthRoot(int N, int M) {
         int left = 1 ;
         int right = M;
         while(left<= right) {
