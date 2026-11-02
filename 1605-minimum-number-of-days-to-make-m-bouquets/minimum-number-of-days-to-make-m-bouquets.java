@@ -1,5 +1,47 @@
 class Solution {
     public int minDays(int[] bloomDay, int m, int k) {
+            if((long)m*k > bloomDay.length) { //cuz int  = 2^9 max
+                return -1;
+            }
+            int low = bloomDay[0];
+            int high = 0;
+            int ans =-1;
+            for(int i = 0 ; i<bloomDay.length ; i++) {
+                low = Math.min(low , bloomDay[i]);
+                high = Math.max(high , bloomDay[i]);
+            }
+            while(low <= high) {
+                 int mid = low + (high - low)/2; //By mid = day 3, can we make 3 bouquets(m)?
+                 int bouquets = 0;
+                 int consecutive = 0;
+                 for(int i = 0 ; i<bloomDay.length ; i++) {
+                    if(bouquets == m) break; //if bouquet=m break no need to search further 
+                    if(bloomDay[i]<= mid) { //age bloomDay[i] chota hai mid se toh voh ug chuka hai tb tk
+                        consecutive++;
+                        if(consecutive == k) {
+                            bouquets++;
+                            consecutive = 0;
+                        }
+                    }
+                    else {
+                        consecutive = 0;
+                    }
+                 }
+                 if(bouquets >= m) {
+                    ans = mid;
+                    high = mid-1;
+                 }
+                 else {
+                    low = mid+1;
+                 }
+            }
+        
+        return ans;
+    }
+}
+
+class Solution {
+    public int minDays(int[] bloomDay, int m, int k) {
 
         //If the number of flowers we need is greater than the number of flowers we have, it's impossible.
         if ((long) m * k > bloomDay.length) {
