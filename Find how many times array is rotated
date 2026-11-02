@@ -14,3 +14,11 @@ class Solution {
         return low;
     }
 }
+NOTE - 
+The minimum element is at mid + 1.
+But what if we haven't found the drop?
+We need to determine which half contains it.
+
+3. Here's the important distinction
+For Find Peak Element, an upward slope tells us where a peak exists.
+For Find K Rotation, an upward slope alone doesn't tell us whether the rotation point is on the left or right.
