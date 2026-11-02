@@ -5,7 +5,7 @@ class Solution {
             mincapacity = Math.max(mincapacity , i);
             maxcapacity += i;
         }
-            int ans = maxcapacity;
+            int ans = maxcapacity; //Note alsways initailize ans with maxcapacity after you have calculated it 
         while(mincapacity<= maxcapacity) {
             //note - we have to choose capacity from the weights and this mid is assumption of one of the capacity
             int mid = mincapacity + (maxcapacity - mincapacity)/2;
