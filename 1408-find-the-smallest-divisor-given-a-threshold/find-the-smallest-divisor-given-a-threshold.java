@@ -12,7 +12,9 @@ class Solution {
             for(int i = 0 ; i<nums.length ; i++) {
                 sum += Math.ceil((double)nums[i]/mid);
             }
-            if(sum <= threshold) {
+            if(sum <= threshold) { //You calculate the sum one element at a time. After the first element, you have a partial sum.
+ //Can you decide whether divisor 5 is valid before calculating the contribution of the remaining three elements?
+//No! You need the complete sum firs
                 /*
                 mid is a valid divisor.
                 Try to find a smaller one.
