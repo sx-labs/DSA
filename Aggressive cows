@@ -15,7 +15,7 @@ class Solution {
         // 3. Binary search on the answer (distance)
         while (left <= right) {
 
-            int mid = left + (right - left) / 2;
+            int mid = left + (right - left) / 2; //this is distance
 
             // 4. Place the first cow
             int lastPosOfCow = arr[0];
