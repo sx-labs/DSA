@@ -1,0 +1,18 @@
+class Solution {
+    public ListNode insertBeforeHead(ListNode head, int data) {
+
+        // Create a new node
+        ListNode newnode = new ListNode(data);
+
+        // Connect new node to the existing head
+        newnode.next = head;
+
+        // Update prev pointer only if the list is not empty
+        if (head != null) {
+            head.prev = newnode;
+        }
+
+        // Return the new head
+        return newnode;
+    }
+}
