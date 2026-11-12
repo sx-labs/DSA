@@ -16,3 +16,30 @@ class Solution {
         return newnode;
     }
 }
+
+1. Why don't we check before updating newnode.next?
+newnode.next = head;
+
+
+Here:
+- newnode is a newly created node.
+- It will never be null because we just created it.
+- head is allowed to be null.
+Assigning null to a reference is perfectly valid in Java.
+
+So even if head == null, this works:
+newnode.next = null;
+
+
+2. Why do we check before updating head.prev?
+head.prev = newnode;
+
+
+Here, we are accessing the prev field of head.
+
+If head == null, Java cannot access prev because there is no node.
+
+That's why we write:
+if (head != null) {
+    head.prev = newnode;
+}
