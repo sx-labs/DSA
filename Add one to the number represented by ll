@@ -1,0 +1,136 @@
+//Bruteforce
+
+class Solution {
+    public ListNode addOne(ListNode head) {
+
+        // Step 1: Handle an empty linked list
+        if (head == null) {
+             return new ListNode(1); //new ListNode(1) instead of null because the problem asks us to add 1 to the number represented by the linked list.
+        }
+
+        // Step 2: Reverse the linked list
+        head = reverse(head);
+
+        // temp is used to traverse the reversed list
+        ListNode temp = head;
+
+        // We need to add 1 to the number
+        int carry = 1;
+
+        // Step 3: Add carry to each node
+        while (temp != null) {
+
+            // Add carry to the current digit
+            temp.val = temp.val + carry;
+
+            // If the result is less than 10,
+            // no carry is left to process
+            if (temp.val < 10) {
+                carry = 0;
+                break;
+            }
+
+            else {
+                // If result is 10, store 0 and carry 1
+                temp.val = 0;
+                carry = 1;
+            }
+
+            // Move to the next node
+            temp = temp.next;
+        }
+
+        // Step 4: If carry is still 1,
+        // all existing digits were 9.
+        // Create a new node containing 1.
+        if (carry == 1) {
+            ListNode node = new ListNode(1);
+            node.next = head;
+            head = node;
+        }
+
+        // Step 5: Reverse again to restore original order
+        head = reverse(head);
+
+        return head;
+    }
+
+    // Function to reverse a linked list
+    public ListNode reverse(ListNode head) {
+
+        ListNode prev = null;
+        ListNode curr = head;
+        ListNode next = null;
+
+        while (curr != null) {
+
+            // Save the next node before breaking the link
+            next = curr.next;
+
+            // Reverse the current node's link
+            curr.next = prev;
+
+            // Move prev forward
+            prev = curr;
+
+            // Move curr forward using saved next
+            curr = next;
+        }
+
+        // prev is the new head after reversal
+        return prev;
+    }
+}
+
+//Backtracking
+class Solution {
+
+    public ListNode addOne(ListNode head) {
+
+        // Edge case: If the linked list is empty,
+        // we still need to return the result of adding 1.
+        // So, create a new node containing 1 instead of returning null.
+        if (head == null) {
+            return new ListNode(1);
+        }
+
+        // Call the recursive helper function.
+        // It reaches the last node first and adds 1 while backtracking.
+        int carry = addOneHelper(head);
+
+        // Edge case: If carry is still 1 after processing
+        // every node, it means all digits were 9 (e.g. 999).
+        // We need to create a new node at the beginning.
+        if (carry == 1) {
+            ListNode newNode = new ListNode(1);
+            newNode.next = head;
+            head = newNode;
+        }
+
+        return head;
+    }
+
+    private int addOneHelper(ListNode node) {
+
+        // Base case: We have reached the end of the linked list.
+        // Return 1 because initially we want to add one to the number.
+        if (node == null) {
+            return 1;
+        }
+
+        // Recursive call: Go to the next node first.
+        // Actual addition happens when recursion returns.
+        int carry = addOneHelper(node.next);
+
+        // Add the carry received from the next node.
+        int sum = node.val + carry;
+
+        // Store the last digit of sum in the current node.
+        // Example: 10 % 10 = 0, so store 0.
+        node.val = sum % 10;
+
+        // Return the carry to the previous node.
+        // Example: 10 / 10 = 1, so return carry 1.
+        return sum / 10;
+    }
+}
