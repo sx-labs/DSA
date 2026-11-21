@@ -1,0 +1,43 @@
+class Solution {
+    public Node deleteAllOccurOfX(Node head, int x) {
+
+        Node curr = head;
+
+        while (curr != null) {
+
+            // Save the next node before deleting curr.
+            // We need it to continue traversing the list.
+            Node nextNode = curr.next;
+
+            // Check whether current node contains the key
+            if (curr.data == x) {
+
+                // Case 1: Deleting the head node
+                if (curr == head) {
+                    head = head.next;
+
+                    // New head's previous pointer should be null
+                    if (head != null) {
+                        head.prev = null;
+                    }
+                }
+
+                // Case 2: Deleting the last node
+                else if (curr.next == null) {
+                    curr.prev.next = null;
+                }
+
+                // Case 3: Deleting a middle node
+                else {
+                    curr.prev.next = curr.next;
+                    curr.next.prev = curr.prev;
+                }
+            }
+
+            // Move to the next node
+            curr = nextNode;
+        }
+
+        return head;
+    }
+}
