@@ -1,0 +1,43 @@
+class Solution {
+    public List<List<Integer>> findPairsWithGivenSum(ListNode head, int target) {
+
+        List<List<Integer>> ans = new ArrayList<>();
+
+        if (head == null) {
+            return ans;
+        }
+
+        ListNode left = head;
+        ListNode right = head;
+
+        // Find the tail
+        while (right.next != null) {
+            right = right.next;
+        }
+
+        // Two-pointer approach
+        while (left != right && right.next != left) {
+
+            int sum = left.val + right.val;
+
+            if (sum == target) {
+                List<Integer> pair = new ArrayList<>();
+                pair.add(left.val);
+                pair.add(right.val);
+
+                ans.add(pair);
+
+                left = left.next;
+                right = right.prev;
+            }
+            else if (sum < target) {
+                left = left.next;
+            }
+            else {
+                right = right.prev;
+            }
+        }
+
+        return ans;
+    }
+}
